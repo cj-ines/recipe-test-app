@@ -1,0 +1,23 @@
+<a *ngIf="recipe" class="block recipe-ite w-44 border-gray-100 bg-white rounded-lg shadow-lg text-gray-600"
+[routerLink]="['recipe', recipe.uuid]" routerLinkActive=" border-purple-600">
+    
+    <img class="rounded-t-lg w-full" [src]="'/assets/' + recipe.images.small" />
+    <div class=" px-3 py-2">
+        <h1 class="font-bold text-purple-700 font-serif">{{ recipe.title }}</h1>
+        <div class="flex justify-between  bg-opacity-50">
+            <div class="flex items-center pt-1">
+                <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4" viewBox="0 0 20 20" fill="currentColor" title="Prep time + Cook Time">
+                    <path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm1-12a1 1 0 10-2 0v4a1 1 0 00.293.707l2.828 2.829a1 1 0 101.415-1.415L11 9.586V6z" clip-rule="evenodd" />
+                </svg>
+                <span class="mr-2"> {{recipe.prepTime + recipe.cookTime}} </span>
+                <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4" viewBox="0 0 20 20" fill="currentColor" title="Servings">
+                    <path fill-rule="evenodd" d="M10 9a3 3 0 100-6 3 3 0 000 6zm-7 9a7 7 0 1114 0H3z" clip-rule="evenodd" />
+                </svg>
+                {{ recipe.servings}}
+            </div>
+            <div class="flex items-center italic">
+                {{ recipe.postDate | date:'shortDate'}}
+            </div>
+        </div>
+    </div>
+</a>
