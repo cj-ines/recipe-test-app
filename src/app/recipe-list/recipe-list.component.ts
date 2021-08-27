@@ -1,5 +1,5 @@
 import { HttpClient } from '@angular/common/http';
-import { Component, Input, OnInit } from '@angular/core';
+import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { Recipe } from '../Recipe';
 
@@ -12,6 +12,7 @@ export class RecipeListComponent implements OnInit {
 
   recipes: Recipe[] | undefined;
   activeId: string = '';
+  @Output() onActiveId = new EventEmitter();
 
   constructor(private http:HttpClient, private route:ActivatedRoute) { }
 
@@ -20,6 +21,11 @@ export class RecipeListComponent implements OnInit {
       this.recipes = response;
       console.log(this.recipes);
     });
+  }
+
+  selectItem(itemId:string) {
+    this.activeId = itemId;
+    this.onActiveId.emit(this.activeId);
   }
 
 }

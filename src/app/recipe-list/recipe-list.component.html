@@ -1,7 +1,7 @@
 
-<div class="flex items-stretch flex-col gap-4 text-purple-50" >
+<div class="flex items-stretch lg:flex-col gap-4 text-purple-50" >
     List of recipes
-    <app-recipe-item *ngFor="let recipe of recipes; let i = index" [recipe]="recipe" [activeId]="activeId">
+    <app-recipe-item *ngFor="let recipe of recipes; let i = index" [recipe]="recipe" [activeId]="activeId" (click)="selectItem(recipe.uuid)">
 
     </app-recipe-item>
 </div>

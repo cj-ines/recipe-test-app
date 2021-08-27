@@ -18,6 +18,8 @@ const routes: Routes = [
       component: RecipeDetailComponent
     }
     ]
+  }, {
+    path: '', redirectTo: '/recipe', pathMatch: 'full'
   }
 ];
 
