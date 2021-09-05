@@ -1,7 +1,8 @@
-import { HttpClient } from '@angular/common/http';
-import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
+import { Component, EventEmitter, OnInit, Output } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
+import { RecipeService } from '../recipe.service';
 import { Recipe } from '../Recipe';
+import { Observable } from 'rxjs';
 
 @Component({
   selector: 'app-recipe-list',
@@ -14,13 +15,12 @@ export class RecipeListComponent implements OnInit {
   activeId: string = '';
   @Output() onActiveId = new EventEmitter();
 
-  constructor(private http:HttpClient, private route:ActivatedRoute) { }
+  constructor(private route:ActivatedRoute, private recipeService:RecipeService) { }
 
   ngOnInit(): void {
-    this.http.get<Recipe[]>('http://localhost:3001/recipes').subscribe( (response) => {
-      this.recipes = response;
-      console.log(this.recipes);
-    });
+    this.recipeService.recipes.subscribe((data:Recipe[])=> {
+      this.recipes = data;
+    })
   }
 
   selectItem(itemId:string) {

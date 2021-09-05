@@ -3,6 +3,7 @@ import { RouterModule, Routes } from '@angular/router';
 import { WelcomeComponent } from './welcome/welcome.component';
 import { RecipeDetailComponent } from './recipe-detail/recipe-detail.component';
 import { AdminComponent } from './admin/admin.component';
+import { RecipeEditComponent } from './recipe-edit/recipe-edit.component';
 
 
 const routes: Routes = [
@@ -14,8 +15,16 @@ const routes: Routes = [
   path: 'recipe', 
   component: WelcomeComponent, children: [
     {
+      path: 'create',
+      component: RecipeEditComponent
+    },
+    {
       path: ':id',
       component: RecipeDetailComponent
+    },
+    {
+      path: ':id/edit',
+      component: RecipeEditComponent
     }
     ]
   }, {

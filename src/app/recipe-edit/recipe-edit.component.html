@@ -1,0 +1,72 @@
+<form  [formGroup]="recipeForm2" class="p-4 bg-white grid grid-cols-2 gap-10 items-start" *ngIf="recipe" (ngSubmit)="submit()">
+    <div class="col-span-2 sticky top-0 p-2 bg-white shadow">
+        <div class="col-span-6 space-x-2">
+            <button type="submit" class="px-3 py-2 bg-purple-700 text-purple-100 rounded-lg text-lg">SAVE CHANGES</button>
+            <button (click)="cancel()" type="button" class="px-3 py-2 border-2 border-purple-700 text-purple-700 rounded-lg text-lg">CANCEL</button>
+        </div>
+    </div>
+    <div class="col-span-1 grid grid-cols-6 gap-2">
+        <div class="col-span-6">
+            <label for="title" class="text-gray-600 font-bold block">Title</label>
+            <input name="title" id="title" formControlName="title" class="w-full rounded border px-2 py-1" type="text">
+        </div>
+        <div class="col-span-2">
+            <label for="prepTime" class="text-gray-600 font-bold block">Prep time</label>
+            <input id="prepTime" name="prepTime" formControlName="prepTime" class="w-full rounded border px-2 py-1" type="text">
+        </div>
+        <div class="col-span-2">
+            <label for="cookTime" class="text-gray-600 font-bold block">Cook time</label>
+            <input id="cookTime" name="cookTime" formControlName="cookTime" class="w-full rounded border px-2 py-1" type="text">
+        </div>
+        <div class="col-span-2">
+            <label for="servings" class="text-gray-600 font-bold block">Servings</label>
+            <input id="servings" name="servings" formControlName="servings"  class="w-full rounded border px-2 py-1" type="text">
+        </div>
+        <div class="col-span-6">
+            <label for="prepTime" class="text-gray-600 font-bold block">Ingredients</label>
+            <ng-container formArrayName="ingridients">
+                <ng-container  *ngFor="let ingridient  of ingridients.controls; let i = index">
+                    <div class="grid grid-cols-6 gap-2 mb-2" [formGroupName]="i">
+                        <div class="col-span-3 flex items-center gap-1">
+                            <button type="button" (click)="removeIngridient(i)">
+                                <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 12H9m12 0a9 9 0 11-18 0 9 9 0 0118 0z" />
+                                  </svg>
+                            </button>
+                            <input formControlName="name" class="w-full rounded border px-2 py-1" type="text" >
+                        </div>
+                        <div class="col-span-1">
+                            <input formControlName="amount" class="w-full rounded border px-2 py-1" type="text">
+                        </div>
+                        <div class="col-span-2">
+                            <input formControlName="measurement" class="w-full rounded border px-2 py-1" type="text">
+                        </div>
+                        <input type="hidden" formControlName="uuid">
+                    </div>
+                </ng-container>
+            </ng-container>
+            <button (click)="addIngridient('',0,'')" class="px-2 py-1 border-2 border-gray-700 rounded text-sm" type="button">Add Ingridient</button>
+        </div>
+    </div>
+    <div class="col-span-1">
+        <label class="text-gray-600 font-bold block">Instructions</label>
+        <ng-container formArrayName="directions">
+            <ng-container *ngFor="let direction of directions.controls; let i = index">
+                <div [formGroupName]="i" class="mb-10">
+                    <label for="" class="text-gray-600 font-bold bold flex items-center">
+                        <button type="button" (click)="removeDirection(i)">
+                            <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 12H9m12 0a9 9 0 11-18 0 9 9 0 0118 0z" />
+                              </svg>
+                        </button>
+                        Step {{ i + 1}}</label>
+                    
+                    <textarea type="text" formControlName="instructions"  class="w-full rounded border px-2 py-1"></textarea>
+                    <input type="checkbox" formControlName="optional"> Optional
+                </div>
+            </ng-container>
+        </ng-container>
+        <button (click)="addDirection('',false)" class="px-2 py-1 border-2 border-gray-700 rounded text-sm" type="button">Add Direction</button>
+    </div>
+    
+</form>
