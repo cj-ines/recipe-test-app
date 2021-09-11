@@ -2,6 +2,7 @@
     <div class="col-span-2 sticky top-0 p-2 bg-white shadow">
         <div class="col-span-6 space-x-2">
             <button type="submit" class="px-3 py-2 bg-purple-700 text-purple-100 rounded-lg text-lg">SAVE CHANGES</button>
+            <button (click)="delete(recipe)" type="button" class="px-3 py-2 bg-red-700 text-red-100 rounded-lg text-lg">DELETE</button>
             <button (click)="cancel()" type="button" class="px-3 py-2 border-2 border-purple-700 text-purple-700 rounded-lg text-lg">CANCEL</button>
         </div>
     </div>
@@ -9,6 +10,10 @@
         <div class="col-span-6">
             <label for="title" class="text-gray-600 font-bold block">Title</label>
             <input name="title" id="title" formControlName="title" class="w-full rounded border px-2 py-1" type="text">
+        </div>
+        <div class="col-span-6">
+            <label for="title" class="text-gray-600 font-bold block">Description</label>
+            <textarea name="description" id="description" formControlName="description" class="w-full rounded border px-2 py-1" type="text"></textarea>
         </div>
         <div class="col-span-2">
             <label for="prepTime" class="text-gray-600 font-bold block">Prep time</label>

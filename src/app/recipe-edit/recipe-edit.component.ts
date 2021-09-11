@@ -7,8 +7,7 @@ import { FormGroup, FormControl, FormArray, FormBuilder, Validators } from '@ang
 
 @Component({
   selector: 'app-recipe-edit',
-  templateUrl: './recipe-edit.component.html',
-  styleUrls: ['./recipe-edit.component.scss']
+  templateUrl: './recipe-edit.component.html'
 })
 export class RecipeEditComponent implements OnInit {
 
@@ -17,6 +16,7 @@ export class RecipeEditComponent implements OnInit {
   recipe?:Recipe;
   recipeForm2:FormGroup = this.fb.group({
     title: ['', Validators.required],
+    description: '',
     prepTime: '',
     servings: '',
     cookTime: '',
@@ -29,27 +29,43 @@ export class RecipeEditComponent implements OnInit {
 
   ngOnInit(): void {
     this.route.params.subscribe((param) => {
-      this.recipeService.one(param.id).subscribe((recipe:Recipe) => {
-        this.recipe = recipe;
-
-        recipe.ingredients.map((ingridient)=> {
-          this.addIngridient(ingridient.name, ingridient.amount, ingridient.measurement)
-        });
-
-        recipe.directions.map((direction)=> {
-          this.addDirection(direction.instructions, direction.optional)
+      if (param.id) {
+        this.recipeService.one(param.id).subscribe((recipe:Recipe) => {
+          this.recipe = recipe;
+          for ( let ingridient of recipe.ingredients) {
+            this.addIngridient(ingridient.name, ingridient.amount, ingridient.measurement)
+          }
+    
+          for (let direction of recipe.directions) {
+            this.addDirection(direction.instructions, direction.optional)
+          }
+    
+          this.recipeForm2.setValue({
+            title: recipe.title,
+            description: recipe.description,
+            cookTime: recipe.cookTime,
+            prepTime: recipe.prepTime,
+            servings: recipe.servings,
+            ingridients: recipe.ingredients,
+            directions: recipe.directions
+          });
         })
+      } else {
+        this.recipe = {
+          uuid: 'new',
+          title: '',
+          postDate: new Date(),
+          editDate: new Date(),
+          images: { full: '', medium: '', small: ''},
+          description: '',
+          prepTime: 0,
+          servings: 0,
+          cookTime: 0,
+          ingredients: [],
+          directions: []
+        };
+      }
 
-        this.recipeForm2.setValue({
-          title: recipe.title,
-          cookTime: recipe.cookTime,
-          prepTime: recipe.prepTime,
-          servings: recipe.servings,
-          ingridients: recipe.ingredients,
-          directions: recipe.directions
-        });
-
-      })
     })
   }
 
@@ -89,21 +105,38 @@ export class RecipeEditComponent implements OnInit {
 
   submit() {
     let values = this.recipeForm2.value;
-    if (this.recipe) {
+    if (this.recipe){
       this.recipe.title = values.title;
+      this.recipe.description = values.description;
       this.recipe.cookTime = +values.cookTime;
       this.recipe.prepTime = +values.prepTime;
       this.recipe.servings = +values.servings;
       this.recipe.ingredients = values.ingridients;
       this.recipe.directions = values.directions;
-      this.recipeService.updateOne(this.recipe).subscribe(()=> {
-        this.recipeService.refreshRecipes();
-      });
+
+      if (this.recipe.uuid !== 'new') {
+        this.recipeService.updateOne(this.recipe).subscribe(()=> {
+          this.recipeService.refreshRecipes();
+          this.router.navigate(['recipe']);
+        });
+      } else {
+        this.recipeService.postOne(this.recipe).subscribe(()=> {
+          this.recipeService.refreshRecipes();
+        });
+      }
+      
     }
 
     this.cancel();
 
     
+  }
+
+  delete(recipe:Recipe) {
+    this.recipeService.deleteOne(recipe).subscribe((response)=> {
+      this.router.navigate(['recipe']);
+      this.recipeService.refreshRecipes();
+    })
   }
   cancel() {
     this.router.navigate(['recipe', this.recipe?.uuid])

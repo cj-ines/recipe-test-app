@@ -5,9 +5,12 @@
             <h1 class="mb-4 text-3xl font-serif italic flex justify-between">{{ recipe.title }}
                 <a class="text-sm rounded border-2 border-white px-3 py-1" [routerLink]="['edit']">Edit</a>
             </h1>
-            <div>Prep time: {{ recipe.prepTime }}</div>
-            <div>Cook time: {{ recipe.cookTime }}</div>
-            <div>Servings: {{ recipe.servings }}</div>
+            <div class="flex justify-between">
+                <strong>Prep time: {{ recipe.prepTime }}</strong>
+                <strong>Cook time: {{ recipe.cookTime }}</strong>
+                <strong>Servings: {{ recipe.servings }}</strong>
+            </div>
+            
         </div>
         <div class="p-4">
             <h2 class="text-2xl font-bold text-yellow-700 font-serif mb-2">Ingredients</h2>

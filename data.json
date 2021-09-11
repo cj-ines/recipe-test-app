@@ -101,7 +101,7 @@
         },
         {
           "name": "pepper jack cheese, shredded",
-          "amount": 1,
+          "amount": "12",
           "measurement": "cup",
           "uuid": "86c9eb8e-3ff6-4d4f-83d7-ea4d9f1ae455"
         }
