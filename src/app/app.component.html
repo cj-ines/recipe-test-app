@@ -1,7 +1,7 @@
 <nav class="bg-white  text-purple-700 font-bold border-b-4 border-purple-700 px-2 py-3 h-42text-xl flex items-center justify-start">
   <ul class="flex items-center gap-2">
     <li>
-      <a routerLinkActive="bg-purple-700 text-purple-50" routerLink="/recipe" class="px-2 py-1 inline-block rounded">Recipes</a>
+      <a routerLinkActive="bg-purple-700 text-purple-50" routerLink="/recipe" class="px-2 py-1 inline-block rounded" [routerLinkActiveOptions]="{exact: true}">Recipes</a>
     </li>
     <li>
       <a routerLinkActive="bg-purple-700 text-purple-50" routerLink="/recipe/create" class="px-2 py-1 inline-block rounded">Create Recipe</a>
